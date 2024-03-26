@@ -48,7 +48,7 @@ export default function Router() {
                 <Route path='category'>
                     <Route path='' element={<Categories />} />
                     <Route path='create' element={<AddOrEditCategory />} />
-                    <Route path='edit' element={<AddOrEditCategory />} />
+                    <Route path='edit/:id' element={<AddOrEditCategory />} />
                 </Route>
 
                 {/* products */}

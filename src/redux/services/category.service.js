@@ -1,4 +1,4 @@
-import { collection, addDoc, query, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, query, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase-config';
 
 export const addCategoryToFirebase = async (category) => {
@@ -26,4 +26,10 @@ export const getCategoryFromFirebase = async () => {
 export const deleteCategoryToFirebase = async (category) => {
     //console.log(category);
     await deleteDoc(doc(db, "categories", category.id));
+}
+
+export const updateCategoryToFirebase = async (category) => {
+    const categoryRef = doc(db, "categories", category.id);
+
+    await updateDoc(categoryRef, category);
 }

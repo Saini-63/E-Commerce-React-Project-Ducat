@@ -53,11 +53,11 @@ export default function Categories() {
                       categories && categories.length > 0 && categories.map((category, index) => (
                         <tr key={index} >
                           <th>{index + 1}</th>
-                          <td>Image</td>
+                          <td><img src={category.image} alt='Not get Firbase' style={{ height: "50px" }} /></td>
                           <td>{category.name}</td>
                           <td>{category.status === '1' ? 'Active' : 'Inactive'}</td>
                           <td>
-                            <button className='btn btn-warning btn-sm me-2'>Edit</button>
+                            <Link to={`/admin/category/edit/${category.id}`} className='btn btn-warning btn-sm me-2'>Edit</Link>
                             <button className='btn btn-danger btn-sm me-2' onClick={() => deleteCategory(category)}>Delete</button>
                           </td>
                         </tr>
