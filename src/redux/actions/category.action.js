@@ -39,7 +39,7 @@ export const getCategoryError = (error) => ({
     payload: error,
 })
 
-// delet category
+// delete category
 export const deleteCategoryStart = (category) => ({
     type: DELETE_CATEGORY_START,
     payload: category,
