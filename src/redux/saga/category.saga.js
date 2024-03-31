@@ -1,7 +1,7 @@
 import { takeLatest, put } from "redux-saga/effects";
 import { ADD_CATEGORY_START, DELETE_CATEGORY_START, GET_CATEGORY_START, UPDATE_CATEGORY_START } from "../constants/category.constant";
 import { addCategoryToFirebase, deleteCategoryToFirebase, getCategoryFromFirebase, updateCategoryToFirebase } from "../services/category.service";
-import { addCategoryError, getCategoryError, getCategoryStart, getCategorySuccess, updateCategoryError } from "../actions/category.action";
+import { addCategoryError, deleteCategoryError, getCategoryError, getCategoryStart, getCategorySuccess, updateCategoryError } from "../actions/category.action";
 
 function* addCategory({ payload }) {
     try {
@@ -27,7 +27,7 @@ function* deleteCategory({ payload }) {
         yield deleteCategoryToFirebase(payload);
         yield put(getCategoryStart());
     } catch (error) {
-        yield put(getCategoryError(error.message));
+        yield put(deleteCategoryError(error.message));
     }
 }
 

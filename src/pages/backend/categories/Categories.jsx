@@ -22,7 +22,7 @@ export default function Categories() {
         <h1 className="text-center text-white display-6">Categories</h1>
         <ol className="breadcrumb justify-content-center mb-0">
           <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-          <li className="breadcrumb-item active text-white">Contact</li>
+          <li className="breadcrumb-item active text-white">Categories</li>
         </ol>
       </div>
 
