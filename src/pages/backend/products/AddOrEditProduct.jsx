@@ -1,7 +1,9 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import Sidebar from '../../../layouts/Sidebar'
 import { useFormData } from '../../../hooks/useFormData'
+import { useDispatch, useSelector } from 'react-redux'
+import { addProductStart, updateProductStart } from '../../../redux/actions/product.action'
 
 const initialState = {
   name: '',
@@ -17,22 +19,57 @@ const initialState = {
 
 export default function AddOrEditProduct() {
 
-  const [formData, imageLoading, setFormData, inputChange, uploadFiles] = useFormData(initialState);
+  let { id } = useParams();
+
+  const products = useSelector((state) => state.product.products);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [formData, imageLoading, setFormData, inputChange, uploadFiles] = useFormData(initialState, "product");
 
   let {
     name, slug, shortDescription, description, price, quantity, category, image, status, } = formData;
 
   const submit = (event) => {
     event.preventDefault();
+    //console.log(formData);
+    if (id) {
+      dispatch(updateProductStart(formData));
+    } else {
+      dispatch(addProductStart(formData));
+    }
+
+    setTimeout(() => {
+      navigate('/admin/product');
+    }, 1000);
   }
+
+  const getProductById = () => {
+    let product = products.find((product) => product.id === id);
+
+    if (product) {
+      setFormData(product);
+    }
+    else {
+      navigate('/admin/product');
+    }
+
+  }
+
+  useEffect(() => {
+    if (id) {
+      getProductById();
+    }
+  }, [id])
 
   return (
     <>
       <div className="container-fluid page-header py-5">
-        <h1 className="text-center text-white display-6">Add Prduct</h1>
+        <h1 className="text-center text-white display-6">{id ? 'Edit' : 'Add'} Product</h1>
         <ol className="breadcrumb justify-content-center mb-0">
           <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-          <li className="breadcrumb-item active text-white">Add Product</li>
+          <li className="breadcrumb-item active text-white">{id ? 'Edit' : 'Add'} Product</li>
         </ol>
       </div>
 
@@ -44,7 +81,7 @@ export default function AddOrEditProduct() {
           <div className="col-sm-9">
             <div className="card">
               <div className="card-header d-flex justify-content-between">
-                <h4 className='fw-bold'>Add Product</h4>
+                <h4 className='fw-bold'>{id ? 'Edit' : 'Add'} Product</h4>
                 <Link to="/admin/product" className='btn btn-primary text-white button'>Back</Link>
               </div>
               <div className="card-body">
@@ -52,7 +89,7 @@ export default function AddOrEditProduct() {
                   <div className="mb-3">
                     <label htmlFor="name" className="form-label">Product Name</label>
                     <input type="text" className="form-control" id="name"
-                      placeholder="category name"
+                      placeholder="product name"
                       name='name'
                       value={name}
                       onChange={inputChange} />

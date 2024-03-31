@@ -11,7 +11,7 @@ export default function Categories() {
   //console.log(categories);
   useEffect(() => {
     dispatch(getCategoryStart());
-  }, []);
+  }, [categories.length]);
 
   const deleteCategory = (category) => {
     dispatch(deleteCategoryStart(category));
@@ -41,7 +41,7 @@ export default function Categories() {
                 <table className="table">
                   <thead>
                     <tr>
-                      <th>#</th>
+                      <th>S.No</th>
                       <th>Image</th>
                       <th>Name</th>
                       <th>Status</th>
@@ -50,9 +50,9 @@ export default function Categories() {
                   </thead>
                   <tbody>
                     {
-                      categories && categories.length > 0 && categories.map((category, index) => (
+                      categories.length > 0 && categories.map((category, index) => (
                         <tr key={index} >
-                          <th>{index + 1}</th>
+                          <td style={{ fontWeight: "bold" }}>{index + 1}</td>
                           <td><img src={category.image} alt='Not get Firbase' style={{ height: "50px" }} /></td>
                           <td>{category.name}</td>
                           <td>{category.status === '1' ? 'Active' : 'Inactive'}</td>

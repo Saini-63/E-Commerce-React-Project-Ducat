@@ -1,7 +1,7 @@
 import { GET_CATEGORY_SUCCESS } from "../constants/category.constant";
 
 const initialState = {
-    categories: localStorage.getItem('categories') ? JSON.parse(localStorage.getItem('countries')) : [],
+    categories: localStorage.getItem('categories') ? JSON.parse(localStorage.getItem('categories')) : [],
 
 }
 

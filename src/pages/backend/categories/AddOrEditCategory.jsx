@@ -20,7 +20,7 @@ export default function AddOrEditCategory() {
   // const [formData, setFormData] = useState(initialState);
   // const [imageLoading, setImageLoading] = useState(false);
 
-  const [formData, imageLoading, setFormData, inputChange, uploadFiles] = useFormData(initialState);
+  const [formData, imageLoading, setFormData, inputChange, uploadFiles] = useFormData(initialState, "category");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -128,7 +128,7 @@ export default function AddOrEditCategory() {
           <div className="col-sm-9">
             <div className="card">
               <div className="card-header d-flex justify-content-between">
-                <h4 className='fw-bold'>Add Category</h4>
+                <h4 className='fw-bold'>{id ? 'Edit' : 'Add'} Category</h4>
                 <Link to="/admin/category" className='btn btn-primary text-white button'>Back</Link>
               </div>
               <div className="card-body">

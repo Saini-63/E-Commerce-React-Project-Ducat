@@ -10,7 +10,7 @@ export const productReducer = (state = initialState, action) => {
             localStorage.setItem('products', JSON.stringify(action.payload));
             return {
                 ...state,
-                categories: action.payload,
+                products: action.payload,
             };
         default:
             return state;

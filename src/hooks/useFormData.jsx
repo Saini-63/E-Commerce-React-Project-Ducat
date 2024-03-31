@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from '../firebase-config';
 
-export const useFormData = (initialState) => {
+export const useFormData = (initialState, flag) => {
 
     const [formData, setFormData] = useState(initialState);
     const [imageLoading, setImageLoading] = useState(false);
@@ -18,7 +18,7 @@ export const useFormData = (initialState) => {
     const uploadFiles = (event) => {
         //console.log(event.target.files[0]);
         // const storage = getStorage();
-        const storageRef = ref(storage, 'category/' + event.target.files[0].name);
+        const storageRef = ref(storage, flag + "/" + event.target.files[0].name);
 
         const uploadTask = uploadBytesResumable(storageRef, event.target.files[0]);
 
