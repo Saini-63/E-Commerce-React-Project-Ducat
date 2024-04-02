@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+
 export default function Header() {
     return (
         <div className="container-fluid fixed-top">
@@ -19,25 +20,14 @@ export default function Header() {
             </div>
             <div className="container px-0">
                 <nav className="navbar navbar-light bg-white navbar-expand-xl">
-                    <Link href="index.html" className="navbar-brand"><h1 className="text-primary display-6">Fruitables</h1></Link>
+                    <Link to="/" className="navbar-brand"><h1 className="text-primary display-6">Fruitables</h1></Link>
                     <button className="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span className="fa fa-bars text-primary"></span>
                     </button>
                     <div className="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div className="navbar-nav mx-auto">
-                            <Link href="index.html" className="nav-item nav-link active">Home</Link>
-                            <Link href="shop.html" className="nav-item nav-link">Shop</Link>
-                            <Link href="shop-detail.html" className="nav-item nav-link">Shop Detail</Link>
-                            <div className="nav-item dropdown">
-                                <Link to="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</Link>
-                                <div className="dropdown-menu m-0 bg-secondary rounded-0">
-                                    <Link href="cart.html" className="dropdown-item">Cart</Link>
-                                    <Link href="chackout.html" className="dropdown-item">Chackout</Link>
-                                    <Link href="testimonial.html" className="dropdown-item">Testimonial</Link>
-                                    <Link href="404.html" className="dropdown-item">404 Page</Link>
-                                </div>
-                            </div>
-                            <Link href="contact.html" className="nav-item nav-link">Contact</Link>
+                            <Link to="/register" className="nav-item nav-link active">Register</Link>
+                            <Link to="/login" className="nav-item nav-link active">Login</Link>
                         </div>
                         <div className="d-flex m-3 me-0">
                             <Link to="#" className="position-relative me-4 my-auto">

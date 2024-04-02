@@ -14,6 +14,8 @@ import Users from '../pages/backend/users/Users'
 import AddOrEditUser from '../pages/backend/users/AddOrEditUser'
 import Orders from '../pages/backend/orders/Orders'
 import OrderView from '../pages/backend/orders/OrderView'
+import Login from '../pages/frontend/Login'
+import Register from '../pages/frontend/Register'
 
 export default function Router() {
     return (
@@ -29,6 +31,12 @@ export default function Router() {
 
             {/* checkout page */}
             <Route path='/checkout' element={<Checkout />} />
+
+            {/* login page */}
+            <Route path='/login' element={<Login />} />
+
+            {/* Register page */}
+            <Route path='/register' element={<Register />} />
 
             {/* admin routes */}
             <Route path='/admin'>

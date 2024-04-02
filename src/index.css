@@ -21,3 +21,13 @@ code {
   background-color: #fff;
   opacity: 1;
 }
+
+.login-form {
+  margin-top: 20px;
+  width: 500px;
+  padding: 2rem 1rem 1rem;
+}
+
+.login-form form {
+  padding: 1rem;
+}
