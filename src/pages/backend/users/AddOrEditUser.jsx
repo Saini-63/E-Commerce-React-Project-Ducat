@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useFormData } from '../../../hooks/useFormData';
 import Sidebar from '../../../layouts/Sidebar';
-import { addUserStart } from '../../../redux/actions/user.action';
+import { addUserStart, updateUserStart } from '../../../redux/actions/user.action';
 
 const initialState = {
   name: '',
@@ -20,6 +20,8 @@ export default function AddOrEditUser() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const users = useSelector((state) => state.user.users);
+
   const [formData, imageLoading, setFormData, inputChange, uploadFiles] = useFormData(initialState, "user");
 
   let { name, email, password, contact, image, status } = formData;
@@ -27,7 +29,11 @@ export default function AddOrEditUser() {
   const submit = (event) => {
     event.preventDefault();
     //console.log(formData);
-    dispatch(addUserStart(formData));
+    if (id) {
+      dispatch(updateUserStart(formData));
+    } else {
+      dispatch(addUserStart(formData));
+    }
 
     setTimeout(() => {
       navigate('/admin/user');
@@ -36,7 +42,14 @@ export default function AddOrEditUser() {
   }
 
   const getUserById = () => {
+    let user = users.find((user) => user.id === id)
 
+    if (user) {
+      setFormData(user);
+    }
+    else {
+      navigate('/admin/user');
+    }
 
   }
 
@@ -91,7 +104,8 @@ export default function AddOrEditUser() {
                       placeholder="Enter Password"
                       name='password'
                       value={password}
-                      onChange={inputChange} />
+                      onChange={inputChange}
+                      disabled={id ? true : false} />
                   </div>
                   <div className="mb-3">
                     <label htmlFor="contact" className="form-label">User Contact Number</label>

@@ -12,9 +12,9 @@ export const getUserStart = () => ({
 
 })
 
-export const getUserSuccess = (products) => ({
+export const getUserSuccess = (users) => ({
     type: GET_USER_SUCCESS,
-    payload: products,
+    payload: users,
 })
 
 export const getUserError = (error) => ({
@@ -23,14 +23,14 @@ export const getUserError = (error) => ({
 })
 
 // ADD USER
-export const addUserStart = (product) => ({
+export const addUserStart = (user) => ({
     type: ADD_USER_START,
-    payload: product,
+    payload: user,
 })
 
-export const addUserSuccess = (product) => ({
+export const addUserSuccess = (user) => ({
     type: ADD_USER_SUCCESS,
-    payload: product,
+    payload: user,
 })
 
 export const addUserError = (error) => ({
@@ -39,15 +39,15 @@ export const addUserError = (error) => ({
 })
 
 // DELETE USER
-export const deleteUserStart = (product) => ({
+export const deleteUserStart = (user) => ({
     type: DELETE_USER_START,
-    payload: product,
+    payload: user,
 
 })
 
-export const deleteUserSuccess = (product) => ({
+export const deleteUserSuccess = (user) => ({
     type: DELETE_USER_SUCCESS,
-    payload: product,
+    payload: user,
 })
 
 export const deleteUserError = (error) => ({
@@ -56,14 +56,14 @@ export const deleteUserError = (error) => ({
 })
 
 // UPDATE USER
-export const updateUserStart = (product) => ({
+export const updateUserStart = (user) => ({
     type: UPDATE_USER_START,
-    payload: product,
+    payload: user,
 })
 
-export const updateUserSuccess = (product) => ({
+export const updateUserSuccess = (user) => ({
     type: UPDATE_USER_SUCCESS,
-    payload: product,
+    payload: user,
 })
 
 export const updateUserError = (error) => ({
