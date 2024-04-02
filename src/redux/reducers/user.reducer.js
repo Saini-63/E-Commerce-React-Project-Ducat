@@ -11,7 +11,7 @@ export const userReducer = (state = initialState, action) => {
             localStorage.setItem('users', JSON.stringify(action.payload));
             return {
                 ...state,
-                products: action.payload,
+                users: action.payload,
             };
         default:
             return state;

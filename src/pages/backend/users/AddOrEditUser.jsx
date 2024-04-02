@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useFormData } from '../../../hooks/useFormData';
 import Sidebar from '../../../layouts/Sidebar';
+import { addUserStart } from '../../../redux/actions/user.action';
 
 const initialState = {
   name: '',
@@ -26,6 +27,11 @@ export default function AddOrEditUser() {
   const submit = (event) => {
     event.preventDefault();
     //console.log(formData);
+    dispatch(addUserStart(formData));
+
+    setTimeout(() => {
+      navigate('/admin/user');
+    }, 2000);
 
   }
 

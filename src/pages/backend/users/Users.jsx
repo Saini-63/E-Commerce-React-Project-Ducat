@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from '../../../layouts/Sidebar'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteUserStart, getUserStart } from '../../../redux/actions/user.action';
 
 export default function Users() {
+
+  const dispatch = useDispatch();
+
+  const users = useSelector((state) => state.user.users);
+
+  useEffect(() => {
+    dispatch(getUserStart());
+  }, [users.length])
+
+  const deleteUser = (user) => {
+    dispatch(deleteUserStart(user));
+  }
+
   return (
     <>
       <div className="container-fluid page-header py-5">
@@ -38,7 +53,22 @@ export default function Users() {
                     </tr>
                   </thead>
                   <tbody>
-
+                    {
+                      users.length > 0 && users.map((user, index) => (
+                        <tr key={index}>
+                          <td>{index + 1}</td>
+                          <td><img src={user.image} alt="no image " style={{ height: "50px" }} /></td>
+                          <td>{user.name}</td>
+                          <td>{user.email}</td>
+                          <td>{user.contact}</td>
+                          <td>{user.status === '1' ? 'Active' : "InActive"}</td>
+                          <td>
+                            <Link to={`/admin/user/edit/${user.id}`} className='btn btn-warning btn-sm me-2'>Edit</Link>
+                            <button className='btn btn-danger btn-sm me-2' onClick={() => deleteUser(user)}>Delete</button>
+                          </td>
+                        </tr>
+                      ))
+                    }
                   </tbody>
                 </table>
               </div>
