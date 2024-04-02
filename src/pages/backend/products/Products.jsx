@@ -8,6 +8,7 @@ export default function Products() {
 
   const dispatch = useDispatch();
   const products = useSelector((state) => state.product.products);
+
   //console.log(products);
 
   useEffect(() => {
@@ -46,9 +47,9 @@ export default function Products() {
                       <th>S.No</th>
                       <th>Image</th>
                       <th>Name</th>
-                      <th>Short Description</th>
                       <th>Price</th>
                       <th>Quantity</th>
+                      <th>Category</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -60,9 +61,9 @@ export default function Products() {
                           <td style={{ fontWeight: "bold" }}>{index + 1}</td>
                           <td><img src={product.image} alt='Not get Firbase' style={{ height: "50px" }} /></td>
                           <td>{product.name}</td>
-                          <td>{product.shortDescription}</td>
                           <td>{product.price}</td>
                           <td>{product.quantity}</td>
+                          <td>{product.category}</td>
                           <td>{product.status === '1' ? 'Active' : 'Inactive'}</td>
                           <td>
                             <Link to={`/admin/product/edit/${product.id}`} className='btn btn-warning btn-sm me-2'>Edit</Link>

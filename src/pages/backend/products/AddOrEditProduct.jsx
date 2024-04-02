@@ -22,6 +22,7 @@ export default function AddOrEditProduct() {
   let { id } = useParams();
 
   const products = useSelector((state) => state.product.products);
+  const categories = useSelector(state => state.category.categories);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -140,6 +141,23 @@ export default function AddOrEditProduct() {
                       name='quantity'
                       value={quantity}
                       onChange={inputChange} />
+                  </div>
+                  <div className="mb-3">
+                    <label htmlFor="category" className="form-label">Product Category</label>
+                    <select id='category'
+                      className='form-control'
+                      name='category'
+                      value={category}
+                      onChange={inputChange}>
+                      <option value='' hidden>Select Category</option>
+                      {
+                        categories.length > 0 && categories.map((cat, index) => {
+                          if (cat.status === '1') {
+                            return <option>{cat.name}</option>
+                          }
+                        })
+                      }
+                    </select>
                   </div>
                   <div className="mb-3">
                     <label htmlFor="status" className="form-label">Product Status</label>
