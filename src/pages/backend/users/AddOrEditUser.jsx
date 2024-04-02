@@ -4,6 +4,9 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useFormData } from '../../../hooks/useFormData';
 import Sidebar from '../../../layouts/Sidebar';
 import { addUserStart, updateUserStart } from '../../../redux/actions/user.action';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from '../../../firebase-config';
+
 
 const initialState = {
   name: '',
@@ -26,13 +29,22 @@ export default function AddOrEditUser() {
 
   let { name, email, password, contact, image, status } = formData;
 
-  const submit = (event) => {
+  const submit = async (event) => {
     event.preventDefault();
     //console.log(formData);
     if (id) {
       dispatch(updateUserStart(formData));
-    } else {
-      dispatch(addUserStart(formData));
+    }
+    else {
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password)
+
+        dispatch(addUserStart({ ...formData, uid: userCredential.user.uid }));
+      }
+      catch (error) {
+        console.log("Signup Error" + error);
+      }
     }
 
     setTimeout(() => {
@@ -98,15 +110,17 @@ export default function AddOrEditUser() {
                       value={email}
                       onChange={inputChange} />
                   </div>
-                  <div className="mb-3">
-                    <label htmlFor="password" className="form-label">User Password</label>
-                    <input type="password" className="form-control" id="password"
-                      placeholder="Enter Password"
-                      name='password'
-                      value={password}
-                      onChange={inputChange}
-                      disabled={id ? true : false} />
-                  </div>
+                  {
+                    !id && <div className="mb-3">
+                      <label htmlFor="password" className="form-label">User Password</label>
+                      <input type="password" className="form-control" id="password"
+                        placeholder="Enter Password"
+                        name='password'
+                        value={password}
+                        onChange={inputChange}
+                      />
+                    </div>
+                  }
                   <div className="mb-3">
                     <label htmlFor="contact" className="form-label">User Contact Number</label>
                     <input type="text" className="form-control" id="contact"
