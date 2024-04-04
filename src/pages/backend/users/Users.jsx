@@ -57,7 +57,7 @@ export default function Users() {
                       users.length > 0 && users.map((user, index) => (
                         <tr key={index}>
                           <td>{index + 1}</td>
-                          <td><img src={user.image} alt="no image " style={{ height: "50px" }} /></td>
+                          <td><img src={user.image} alt="no data  " style={{ height: "50px" }} /></td>
                           <td>{user.name}</td>
                           <td>{user.email}</td>
                           <td>{user.contact}</td>

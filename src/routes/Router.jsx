@@ -16,6 +16,7 @@ import Orders from '../pages/backend/orders/Orders'
 import OrderView from '../pages/backend/orders/OrderView'
 import Login from '../pages/frontend/Login'
 import Register from '../pages/frontend/Register'
+import Auth from '../pages/backend/Auth'
 
 export default function Router() {
     return (
@@ -39,7 +40,7 @@ export default function Router() {
             <Route path='/register' element={<Register />} />
 
             {/* admin routes */}
-            <Route path='/admin'>
+            <Route path='/admin' element={<Auth />}>
                 {/* dashboard routes */}
                 <Route path='dashboard' element={<Profile />} />
 

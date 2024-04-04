@@ -2,7 +2,7 @@ import { collection, addDoc, query, getDocs, deleteDoc, doc, updateDoc } from 'f
 import { db } from '../../firebase-config';
 
 export const addUserToFirebase = async (user) => {
-    //console.log(product);
+    console.log(user);
     const docRef = await addDoc(collection(db, "users"), user);
     console.log("Document written with ID: ", docRef.id);
 }
