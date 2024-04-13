@@ -7,6 +7,7 @@ export default function Header() {
 
     const currentUser = useSelector((state) => state.user.currentUser);
 
+
     useEffect(() => {
 
     }, [currentUser.name])

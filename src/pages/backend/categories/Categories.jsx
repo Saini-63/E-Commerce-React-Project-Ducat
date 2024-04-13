@@ -7,7 +7,7 @@ import { deleteCategoryStart, getCategoryStart } from '../../../redux/actions/ca
 
 export default function Categories() {
   const dispatch = useDispatch();
-  const categories = useSelector(state => state.category.categories);
+  const categories = useSelector((state) => state.category.categories);
   //console.log(categories);
   useEffect(() => {
     dispatch(getCategoryStart());

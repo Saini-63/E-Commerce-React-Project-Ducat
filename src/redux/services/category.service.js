@@ -19,7 +19,7 @@ export const getCategoryFromFirebase = async () => {
         category.id = doc.id;
         categories.push(category);
     });
-    //console.log(categories);
+    //console.log("firebase-service-category", categories);
     return categories;
 }
 

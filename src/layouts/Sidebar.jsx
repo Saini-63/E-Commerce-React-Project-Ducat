@@ -19,7 +19,7 @@ export default function Sidebar() {
             <li className="list-group-item active" aria-current="true">Sidebar</li>
             <li className="list-group-item"><Link to='/admin/dashboard'>Dashboard</Link></li>
             <li className="list-group-item">Order</li>
-            <li className="list-group-item"><Link to='/admin/catgory'>Category</Link></li>
+            <li className="list-group-item"><Link to='/admin/category'>Category</Link></li>
             <li className="list-group-item"><Link to='/admin/product'>Product</Link></li>
             <li className="list-group-item"><Link to='/admin/user'>User</Link></li>
             <li className="list-group-item"><Link onClick={logout}>Log Out</Link></li>
