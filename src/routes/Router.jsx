@@ -25,7 +25,7 @@ export default function Router() {
             <Route path='/' element={<Home />} />
 
             {/* product details page */}
-            <Route path='/product-details' element={<Details />} />
+            <Route path='/product-details/:id' element={<Details />} />
 
             {/* cart page */}
             <Route path='/cart' element={<Cart />} />

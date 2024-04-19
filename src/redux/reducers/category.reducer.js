@@ -1,7 +1,9 @@
 import { GET_CATEGORY_SUCCESS } from "../constants/category.constant";
 
+let previousCategory = localStorage.getItem('categories') ? JSON.parse(localStorage.getItem('categories')) : [];
+
 const initialState = {
-    categories: localStorage.getItem('categories') ? JSON.parse(localStorage.getItem('categories')) : [],
+    categories: previousCategory ?? [],
 
 }
 

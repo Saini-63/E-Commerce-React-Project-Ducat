@@ -1,5 +1,5 @@
 import { takeLatest, put } from "redux-saga/effects";
-import { ADD_USER_START, DELETE_USER_START, GET_USER_START, LOGIN_USER_START, LOGOUT_USER_START, UPDATE_USER_START } from './../constants/user.constant';
+import { ADD_USER_START, DELETE_USER_START, EDIT_PROFILE_USER_START, GET_USER_START, LOGIN_USER_START, LOGOUT_USER_START, UPDATE_USER_START } from './../constants/user.constant';
 import { addUserError, deleteUserError, getUserError, getUserStart, getUserSuccess, loginUserError, loginUserSuccess, logoutUserError, logoutUserSuccess, updateUserError } from "../actions/user.action";
 import { addUserToFirebase, deleteUserToFirebase, updateUserToFirebase, getUserFromFirebase } from './../services/user.service';
 
@@ -61,6 +61,16 @@ function* logoutUser() {
     }
 }
 
+function* editProfileUser({ payload }) {
+    try {
+        yield updateUserToFirebase(payload);
+        yield put(getUserStart());
+        yield put(loginUserSuccess(payload));
+    } catch (error) {
+        yield put(updateUserError(error.message));
+    }
+}
+
 export default function* user() {
     yield takeLatest(ADD_USER_START, addUser);
     yield takeLatest(GET_USER_START, getUser);
@@ -68,4 +78,5 @@ export default function* user() {
     yield takeLatest(UPDATE_USER_START, updateUser);
     yield takeLatest(LOGIN_USER_START, loginUser);
     yield takeLatest(LOGOUT_USER_START, logoutUser);
+    yield takeLatest(EDIT_PROFILE_USER_START, editProfileUser);
 }

@@ -26,7 +26,7 @@ export default function Profile() {
             <div className="card">
               <div className="card-header d-flex justify-content-between">
                 <h4 className='fw-bold'>Profile</h4>
-                <Link to="/admin/product/create" className='btn btn-primary text-white button'>Edit Profile</Link>
+                <Link to="/admin/profile/edit" className='btn btn-primary text-white button'>Edit Profile</Link>
               </div>
               <div className="card-body">
                 <h5>Name: {currentUser.name}</h5>

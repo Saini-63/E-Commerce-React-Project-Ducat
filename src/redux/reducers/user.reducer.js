@@ -1,11 +1,18 @@
 import { GET_USER_SUCCESS, LOGIN_USER_SUCCESS, LOGOUT_USER_SUCCESS } from "../constants/user.constant";
 
+let previousUsers = localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [];
+
+let currentUser = localStorage.getItem('currentUser') ?
+    JSON.parse(localStorage.getItem('currentUser')) :
+    { name: '', email: '', contact: '' }
 
 const initialState = {
-    users: localStorage.getItem('users') ? JSON.parse(localStorage.getItem('users')) : [],
-    currentUser: localStorage.getItem('currentUser') ?
-        JSON.parse(localStorage.getItem('currentUser')) :
-        { name: '', email: '', contact: '', },
+    users: previousUsers ?? [],
+    currentUser: currentUser ?? {
+        name: '',
+        email: '',
+        contact: ''
+    },
 }
 
 export const userReducer = (state = initialState, action) => {

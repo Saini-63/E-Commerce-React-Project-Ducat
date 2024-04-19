@@ -1,7 +1,9 @@
 import { GET_PRODUCT_SUCCESS } from "../constants/product.constant";
 
+let previousProduct = localStorage.getItem('products') ? JSON.parse(localStorage.getItem('products')) : [];
+
 const initialState = {
-    products: localStorage.getItem('products') ? JSON.parse(localStorage.getItem('products')) : [],
+    products: previousProduct ?? [],
 }
 
 export const productReducer = (state = initialState, action) => {

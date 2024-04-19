@@ -1,6 +1,6 @@
 import {
     ADD_USER_ERROR, ADD_USER_START, ADD_USER_SUCCESS, DELETE_USER_ERROR, DELETE_USER_START,
-    DELETE_USER_SUCCESS, GET_USER_ERROR, GET_USER_START, GET_USER_SUCCESS, LOGIN_USER_ERROR, LOGIN_USER_START, LOGIN_USER_SUCCESS, LOGOUT_USER_ERROR, LOGOUT_USER_START, LOGOUT_USER_SUCCESS, UPDATE_USER_ERROR, UPDATE_USER_START,
+    DELETE_USER_SUCCESS, EDIT_PROFILE_USER_ERROR, EDIT_PROFILE_USER_START, EDIT_PROFILE_USER_SUCCESS, GET_USER_ERROR, GET_USER_START, GET_USER_SUCCESS, LOGIN_USER_ERROR, LOGIN_USER_START, LOGIN_USER_SUCCESS, LOGOUT_USER_ERROR, LOGOUT_USER_START, LOGOUT_USER_SUCCESS, UPDATE_USER_ERROR, UPDATE_USER_START,
     UPDATE_USER_SUCCESS
 } from "../constants/user.constant"
 
@@ -100,5 +100,21 @@ export const logoutUserSuccess = () => ({
 
 export const logoutUserError = (error) => ({
     type: LOGOUT_USER_ERROR,
+    payload: error,
+})
+
+// EDIT PROFILE
+export const editProfileUserStart = (user) => ({
+    type: EDIT_PROFILE_USER_START,
+    payload: user,
+})
+
+export const editProfileUserSuccess = (user) => ({
+    type: EDIT_PROFILE_USER_SUCCESS,
+    payload: user,
+})
+
+export const editProfileUserError = (error) => ({
+    type: EDIT_PROFILE_USER_ERROR,
     payload: error,
 })
