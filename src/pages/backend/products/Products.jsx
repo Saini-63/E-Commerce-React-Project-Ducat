@@ -1,24 +1,20 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import Sidebar from '../../../layouts/Sidebar'
-import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteProductStart, getProductStart } from '../../../redux/actions/product.action';
 
 export default function Products() {
-
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.product.products);
-
-  //console.log(products);
+  const products = useSelector(state => state.product.products)
 
   useEffect(() => {
-    dispatch(getProductStart());
+    dispatch(getProductStart())
   }, [products.length])
 
   const deleteProduct = (product) => {
-    dispatch(deleteProductStart(product));
+    dispatch(deleteProductStart(product))
   }
-
   return (
     <>
       <div className="container-fluid page-header py-5">
@@ -35,16 +31,16 @@ export default function Products() {
             <Sidebar />
           </div>
           <div className="col-sm-9">
-            <div className="card">
+            <div className="card" >
               <div className="card-header d-flex justify-content-between">
                 <h4 className='fw-bold'>Products</h4>
                 <Link to="/admin/product/create" className='btn btn-primary text-white button'>Add Product</Link>
               </div>
               <div className="card-body">
-                <table className="table">
+                <table className="table table-striped">
                   <thead>
                     <tr>
-                      <th>S.No</th>
+                      <th>#</th>
                       <th>Image</th>
                       <th>Name</th>
                       <th>Price</th>
@@ -57,11 +53,13 @@ export default function Products() {
                   <tbody>
                     {
                       products.length > 0 && products.map((product, index) => (
-                        <tr key={index} >
-                          <td style={{ fontWeight: "bold" }}>{index + 1}</td>
-                          <td><img src={product.image} alt='Not get Firbase' style={{ height: "50px" }} /></td>
+                        <tr key={index}>
+                          <th>{index + 1}</th>
+                          <td><img src={product.image} alt="" style={{
+                            height: "50px"
+                          }} /></td>
                           <td>{product.name}</td>
-                          <td>{product.price}</td>
+                          <td>${product.price}</td>
                           <td>{product.quantity}</td>
                           <td>{product.category}</td>
                           <td>{product.status === '1' ? 'Active' : 'Inactive'}</td>
@@ -72,13 +70,14 @@ export default function Products() {
                         </tr>
                       ))
                     }
+
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
         </div>
-      </div >
+      </div>
     </>
   )
 }

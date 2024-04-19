@@ -1,21 +1,19 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import Sidebar from '../../../layouts/Sidebar'
+import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteUserStart, getUserStart } from '../../../redux/actions/user.action';
 
 export default function Users() {
-
+  const users = useSelector(state => state.user.users);
   const dispatch = useDispatch();
 
-  const users = useSelector((state) => state.user.users);
-
   useEffect(() => {
-    dispatch(getUserStart());
+    dispatch(getUserStart())
   }, [users.length])
 
   const deleteUser = (user) => {
-    dispatch(deleteUserStart(user));
+    dispatch(deleteUserStart(user))
   }
 
   return (
@@ -34,20 +32,20 @@ export default function Users() {
             <Sidebar />
           </div>
           <div className="col-sm-9">
-            <div className="card">
+            <div className="card" >
               <div className="card-header d-flex justify-content-between">
                 <h4 className='fw-bold'>Users</h4>
                 <Link to="/admin/user/create" className='btn btn-primary text-white button'>Add User</Link>
               </div>
               <div className="card-body">
-                <table className="table">
+                <table className="table table-striped">
                   <thead>
                     <tr>
-                      <th>S.No</th>
+                      <th>#</th>
                       <th>Image</th>
                       <th>Name</th>
                       <th>Email</th>
-                      <th>Contact</th>
+                      <th>Contact Number</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -57,11 +55,11 @@ export default function Users() {
                       users.length > 0 && users.map((user, index) => (
                         <tr key={index}>
                           <td>{index + 1}</td>
-                          <td><img src={user.image} alt="no data  " style={{ height: "50px" }} /></td>
+                          <td><img src={user.image} alt="" /></td>
                           <td>{user.name}</td>
                           <td>{user.email}</td>
                           <td>{user.contact}</td>
-                          <td>{user.status === '1' ? 'Active' : "InActive"}</td>
+                          <td>{user.status === '1' ? 'Active' : 'Inactive'}</td>
                           <td>
                             <Link to={`/admin/user/edit/${user.id}`} className='btn btn-warning btn-sm me-2'>Edit</Link>
                             <button className='btn btn-danger btn-sm me-2' onClick={() => deleteUser(user)}>Delete</button>
@@ -69,13 +67,14 @@ export default function Users() {
                         </tr>
                       ))
                     }
+
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
         </div>
-      </div >
+      </div>
     </>
   )
 }

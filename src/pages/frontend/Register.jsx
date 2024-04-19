@@ -1,43 +1,39 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormData } from './../../hooks/useFormData';
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebase-config';
 import { useDispatch } from 'react-redux';
 import { addUserStart } from '../../redux/actions/user.action';
-import { auth } from '../../firebase-config.js';
-
-const initialState = {
-    name: '',
-    email: '',
-    password: '',
-}
 
 export default function Register() {
-
-    const [error, setError] = useState('');
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-
-
-    let [formData, , , inputChange] = useFormData(initialState);
+    const dispatch = useDispatch();
+    const [error, setError] = useState('');
+    let [formData, , , inputChange] = useFormData({
+        name: '',
+        email: '',
+        password: '',
+        role: '0',
+    })
 
     let { name, email, password } = formData;
 
-
-    const submit = async (event) => {
+    const submit = (event) => {
         event.preventDefault();
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-            dispatch(addUserStart({ ...formData, uid: userCredential.user.uid }));
 
-            setTimeout(() => {
-                navigate('/login');
-            }, 2000);
-        }
-        catch (err) {
-            //console.log("Signup Error" + error);
-            setError("Email id already exist");
-        }
+        createUserWithEmailAndPassword(auth, formData.email, formData.password)
+            .then((userCredential) => {
+                dispatch(addUserStart({ ...formData, uid: userCredential.user.uid }))
+
+                setTimeout(() => {
+                    navigate('/login')
+                }, 1000)
+            })
+            .catch((err) => {
+                setError("Email id already exists")
+            });
+
     }
 
     return (
@@ -49,22 +45,21 @@ export default function Register() {
                     <li className="breadcrumb-item active text-white">Sign Up</li>
                 </ol>
             </div>
+
             <div className="container">
                 <div className="wrapper d-flex align-items-center justify-content-center h-100">
                     <div className="card login-form">
                         <div className="card-body">
-                            <h5 className="card-title text-center">Sign Up </h5>
+                            <h5 className="card-title text-center">Sign Up</h5>
                             <form onSubmit={submit}>
-                                {
-                                    error && <p className='text-danger text-center fw-bold'>{error}</p>
-                                }
+                                {error && <p className='text-danger text-center fw-bold'>{error}</p>}
                                 <div className="mb-3">
                                     <label htmlFor="name" className="form-label">Name</label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         id="name"
-                                        name="name"
+                                        name='name'
                                         value={name}
                                         onChange={inputChange} />
                                 </div>
@@ -74,7 +69,7 @@ export default function Register() {
                                         type="email"
                                         className="form-control"
                                         id="email"
-                                        name="email"
+                                        name='email'
                                         value={email}
                                         onChange={inputChange} />
                                 </div>
@@ -84,13 +79,15 @@ export default function Register() {
                                         type="password"
                                         className="form-control"
                                         id="password"
-                                        name="password"
+                                        name='password'
                                         value={password}
                                         onChange={inputChange} />
                                 </div>
                                 <button type="submit" className="btn btn-primary w-100">Submit</button>
                                 <div className="sign-up mt-4">
-                                    Already have an account? <Link to="/login" style={{ float: "right" }} >Sign In</Link>
+                                    allready have an account? <Link to="/login" style={{
+                                        float: "right",
+                                    }}>Sign in</Link>
                                 </div>
                             </form>
                         </div>

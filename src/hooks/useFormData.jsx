@@ -1,24 +1,21 @@
 import { useState } from "react";
-
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage } from '../firebase-config';
+import { storage } from "../firebase-config";
+
 
 export const useFormData = (initialState, flag) => {
-
     const [formData, setFormData] = useState(initialState);
     const [imageLoading, setImageLoading] = useState(false);
 
     const inputChange = (event) => {
         setFormData((prevState) => ({
             ...prevState,
-            [event.target.name]: event.target.value,
+            [event.target.name]: event.target.value
         }))
     }
 
     const uploadFiles = (event) => {
-        //console.log(event.target.files[0]);
-        // const storage = getStorage();
-        const storageRef = ref(storage, flag + "/" + event.target.files[0].name);
+        const storageRef = ref(storage, flag+ "/" + event.target.files[0].name);
 
         const uploadTask = uploadBytesResumable(storageRef, event.target.files[0]);
 
@@ -32,7 +29,7 @@ export const useFormData = (initialState, flag) => {
                 // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 console.log('Upload is ' + progress + '% done');
-                setImageLoading(true);
+                setImageLoading(true)
                 switch (snapshot.state) {
                     case 'paused':
                         console.log('Upload is paused');
@@ -49,11 +46,10 @@ export const useFormData = (initialState, flag) => {
                 // Handle successful uploads on complete
                 // For instance, get the download URL: https://firebasestorage.googleapis.com/...
                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    //console.log('File available at', downloadURL);
-                    setImageLoading(false);
+                    setImageLoading(false)
                     setFormData((prevValue) => ({
                         ...prevValue,
-                        image: downloadURL,
+                        image: downloadURL
                     }))
                 });
             }

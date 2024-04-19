@@ -17,6 +17,7 @@ import OrderView from '../pages/backend/orders/OrderView'
 import Login from '../pages/frontend/Login'
 import Register from '../pages/frontend/Register'
 import Auth from '../pages/backend/Auth'
+import Thankyou from '../pages/frontend/Thankyou'
 
 export default function Router() {
     return (
@@ -36,8 +37,11 @@ export default function Router() {
             {/* login page */}
             <Route path='/login' element={<Login />} />
 
-            {/* Register page */}
-            <Route path='/register' element={<Register />} />
+             {/* register page */}
+             <Route path='/register' element={<Register />} />
+
+             {/* thank you */}
+             <Route path='/thank-you' element={<Thankyou />} />
 
             {/* admin routes */}
             <Route path='/admin' element={<Auth />}>
@@ -50,7 +54,7 @@ export default function Router() {
                 {/* orders */}
                 <Route path='order'>
                     <Route path='' element={<Orders />} />
-                    <Route path='view' element={<OrderView />} />
+                    <Route path='view/:id' element={<OrderView />} />
                 </Route>
 
                 {/* categories */}
@@ -73,7 +77,6 @@ export default function Router() {
                     <Route path='create' element={<AddOrEditUser />} />
                     <Route path='edit/:id' element={<AddOrEditUser />} />
                 </Route>
-
             </Route>
         </Routes>
     )

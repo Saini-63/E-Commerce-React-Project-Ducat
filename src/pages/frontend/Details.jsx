@@ -1,20 +1,74 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useCart } from '../../hooks/useCart';
+import { addCartStart } from '../../redux/actions/cart.action';
 
 export default function Details() {
+  const [quantity, setQuantity] = useState(1)
+  const { id } = useParams();
+  const [product, setProduct] = useState();
+  const navigate = useNavigate()
+  const products = useSelector(state => state.product.products)
+  const currentCart = useSelector(state => state.cart.currentCart);
+  const currentUser = useSelector(state => state.user.currentUser);
+
+
+  let [addCart] = useCart();
+  const dispatch = useDispatch()
+
+  const addToCart = () => {
+    if (!currentUser.name) {
+      navigate('/login')
+    }
+
+    let response = addCart({ ...currentCart }, product, currentUser, quantity)
+    dispatch(addCartStart(response))
+  }
+
+  const incrementQuantity = () => {
+    setQuantity(quantity + 1)
+  }
+
+  const decrementQuantity = () => {
+    if (quantity !== 1) {
+      setQuantity(quantity - 1)
+    }
+  }
+
+  const getProductById = () => {
+    let product = products.find((product) => product.id === id);
+
+    if (product) {
+      setProduct(product)
+
+      let item = currentCart.items.find(item => item.id === product.id);
+
+      if (item) {
+        setQuantity(item.purchaseQuantity)
+      }
+
+    } else {
+      navigate('/')
+    }
+  }
+
+  useEffect(() => {
+    if (id) {
+      getProductById();
+    }
+  }, [id])
+
   return (
     <>
-      {/* <!-- Single Page Header start --> */}
       <div className="container-fluid page-header py-5">
-        <h1 className="text-center text-white display-6">Product Name</h1>
+        <h1 className="text-center text-white display-6">{product?.name}</h1>
         <ol className="breadcrumb justify-content-center mb-0">
           <li className="breadcrumb-item"><Link to="/">Home</Link></li>
-          <li className="breadcrumb-item active text-white">Shop Detail</li>
+          <li className="breadcrumb-item active text-white">{product?.name}</li>
         </ol>
       </div>
-      {/* <!-- Single Page Header End --> */}
 
-      {/* <!-- Single Product Start --> */}
       <div className="container-fluid py-5 mt-5">
         <div className="container py-5">
           <div className="row g-4 mb-5">
@@ -23,31 +77,49 @@ export default function Details() {
                 <div className="col-lg-6">
                   <div className="border rounded">
                     <a href="#">
-                      <img src="/img/single-item.jpg" className="img-fluid rounded" alt="Image" />
+                      <img src={product?.image} className="img-fluid rounded" alt={product?.name} style={{
+                        height: "100%",
+                        width: "100%",
+                      }} />
                     </a>
                   </div>
                 </div>
                 <div className="col-lg-6">
-                  <h4 className="fw-bold mb-3">Brocoli</h4>
-                  <p className="mb-3">Category: Vegetables</p>
-                  <h5 className="fw-bold mb-3">3,35 $</h5>
+                  <h4 className="fw-bold mb-3">{product?.name}</h4>
+                  <p className="mb-3">Category: {product?.category}</p>
+                  <h5 className="fw-bold mb-3">${product?.price}</h5>
 
-                  <p className="mb-4">The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc.</p>
-                  <p className="mb-4">Susp endisse ultricies nisi vel quam suscipit. Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish</p>
-                  <div className="input-group quantity mb-5" style={{ width: "100px" }}>
+                  <p className="mb-4">{product?.shortDescription}</p>
+                  <div className="input-group quantity mb-5" style={{
+                    width: "100px"
+                  }}>
                     <div className="input-group-btn">
-                      <button className="btn btn-sm btn-minus rounded-circle bg-light border" >
+                      <button
+                        className="btn btn-sm btn-minus rounded-circle bg-light border"
+                        onClick={decrementQuantity} >
                         <i className="fa fa-minus"></i>
                       </button>
                     </div>
-                    <input type="text" className="form-control form-control-sm text-center border-0" value="1" />
+                    <input
+                      type="text"
+                      className="form-control form-control-sm text-center border-0"
+                      value={quantity}
+                      disabled
+                      onChange={() => { }} />
                     <div className="input-group-btn">
-                      <button className="btn btn-sm btn-plus rounded-circle bg-light border">
+                      <button
+                        className="btn btn-sm btn-plus rounded-circle bg-light border"
+                        onClick={incrementQuantity}>
                         <i className="fa fa-plus"></i>
                       </button>
                     </div>
                   </div>
-                  <Link to="#" className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i className="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</Link>
+                  <button
+                    onClick={addToCart}
+                    className="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">
+                    <i className="fa fa-shopping-bag me-2 text-primary"></i>
+                    Add to cart
+                  </button>
                 </div>
                 <div className="col-lg-12">
                   <nav>
@@ -59,56 +131,7 @@ export default function Details() {
                   </nav>
                   <div className="tab-content mb-5">
                     <div className="tab-pane active" id="nav-about" role="tabpanel" aria-labelledby="nav-about-tab">
-                      <p>The generated Lorem Ipsum is therefore always free from repetition injected humour, or non-characteristic words etc.
-                        Susp endisse ultricies nisi vel quam suscipit </p>
-                      <p>Sabertooth peacock flounder; chain pickerel hatchetfish, pencilfish snailfish filefish Antarctic
-                        icefish goldeye aholehole trumpetfish pilot fish airbreathing catfish, electric ray sweeper.</p>
-                      <div className="px-2">
-                        <div className="row g-4">
-                          <div className="col-6">
-                            <div className="row bg-light align-items-center text-center justify-content-center py-2">
-                              <div className="col-6">
-                                <p className="mb-0">Weight</p>
-                              </div>
-                              <div className="col-6">
-                                <p className="mb-0">1 kg</p>
-                              </div>
-                            </div>
-                            <div className="row text-center align-items-center justify-content-center py-2">
-                              <div className="col-6">
-                                <p className="mb-0">Country of Origin</p>
-                              </div>
-                              <div className="col-6">
-                                <p className="mb-0">Agro Farm</p>
-                              </div>
-                            </div>
-                            <div className="row bg-light text-center align-items-center justify-content-center py-2">
-                              <div className="col-6">
-                                <p className="mb-0">Quality</p>
-                              </div>
-                              <div className="col-6">
-                                <p className="mb-0">Organic</p>
-                              </div>
-                            </div>
-                            <div className="row text-center align-items-center justify-content-center py-2">
-                              <div className="col-6">
-                                <p className="mb-0">Сheck</p>
-                              </div>
-                              <div className="col-6">
-                                <p className="mb-0">Healthy</p>
-                              </div>
-                            </div>
-                            <div className="row bg-light text-center align-items-center justify-content-center py-2">
-                              <div className="col-6">
-                                <p className="mb-0">Min Weight</p>
-                              </div>
-                              <div className="col-6">
-                                <p className="mb-0">250 Kg</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      {product?.description}
                     </div>
                   </div>
                 </div>
@@ -117,9 +140,9 @@ export default function Details() {
             </div>
 
           </div>
+
         </div>
       </div>
-      {/* <!-- Single Product End --> */}
     </>
   )
 }

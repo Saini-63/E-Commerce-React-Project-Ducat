@@ -5,7 +5,7 @@ import { useFormData } from '../../../hooks/useFormData'
 import { useDispatch, useSelector } from 'react-redux'
 import { addProductStart, updateProductStart } from '../../../redux/actions/product.action'
 
-const initialState = {
+let initialState = {
   name: '',
   slug: '',
   shortDescription: '',
@@ -16,46 +16,42 @@ const initialState = {
   category: '',
   status: '',
 }
-
 export default function AddOrEditProduct() {
-
   let { id } = useParams();
-
-  const products = useSelector((state) => state.product.products);
-  const categories = useSelector(state => state.category.categories);
-
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const navigate = useNavigate();
+  const products = useSelector(state => state.product.products)
+  const categories = useSelector(state => state.category.categories)
 
-  const [formData, imageLoading, setFormData, inputChange, uploadFiles] = useFormData(initialState, "product");
+  const [formData, imageLoading, setFormData, inputChange, uploadFiles] = useFormData(initialState, "product")
 
   let {
-    name, slug, shortDescription, description, price, quantity, category, image, status, } = formData;
+    name, slug, shortDescription, description, price, quantity, category, image, status,
+  } = formData
+
 
   const submit = (event) => {
-    event.preventDefault();
-    //console.log(formData);
+    event.preventDefault()
+
     if (id) {
-      dispatch(updateProductStart(formData));
+      dispatch(updateProductStart(formData))
     } else {
-      dispatch(addProductStart(formData));
+      dispatch(addProductStart(formData))
     }
 
     setTimeout(() => {
-      navigate('/admin/product');
-    }, 1000);
+      navigate("/admin/product")
+    }, 1000)
   }
 
   const getProductById = () => {
     let product = products.find((product) => product.id === id);
 
     if (product) {
-      setFormData(product);
+      setFormData(product)
+    } else {
+      navigate('/admin/product')
     }
-    else {
-      navigate('/admin/product');
-    }
-
   }
 
   useEffect(() => {
@@ -80,7 +76,7 @@ export default function AddOrEditProduct() {
             <Sidebar />
           </div>
           <div className="col-sm-9">
-            <div className="card">
+            <div className="card" >
               <div className="card-header d-flex justify-content-between">
                 <h4 className='fw-bold'>{id ? 'Edit' : 'Add'} Product</h4>
                 <Link to="/admin/product" className='btn btn-primary text-white button'>Back</Link>
@@ -89,88 +85,120 @@ export default function AddOrEditProduct() {
                 <form onSubmit={submit}>
                   <div className="mb-3">
                     <label htmlFor="name" className="form-label">Product Name</label>
-                    <input type="text" className="form-control" id="name"
-                      placeholder="product name"
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="name"
+                      placeholder="Product Name"
                       name='name'
                       value={name}
                       onChange={inputChange} />
                   </div>
                   <div className="mb-3">
                     <label htmlFor="slug" className="form-label">Product Slug</label>
-                    <input type="text" className="form-control" id="slug"
-                      placeholder="product slug"
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="slug"
+                      placeholder="Product Slug"
                       name='slug'
                       value={slug}
                       onChange={inputChange} />
                   </div>
                   <div className="mb-3">
                     <label htmlFor="image" className="form-label">Product Image</label>
-                    <input type="file" className="form-control" id="image" onChange={uploadFiles} />
+                    <input
+                      type="file"
+                      className="form-control"
+                      id="image"
+                      onChange={uploadFiles} />
                     {
                       image && <div className='mt-4'>
-                        <img src={image} alt='Not in database of firebase' style={{ height: "50px" }} />
+                        <img src={image} alt="" style={{
+                          height: "50px"
+                        }} />
                       </div>
                     }
                   </div>
+
                   <div className="mb-3">
                     <label htmlFor="shortDescription" className="form-label">Product Short Description</label>
-                    <textarea className="form-control" id="shortDescription"
+                    <textarea
+                      className="form-control"
+                      id="slug"
                       name='shortDescription'
                       value={shortDescription}
-                      onChange={inputChange} rows={5}></textarea>
+                      onChange={inputChange} rows={5} ></textarea>
                   </div>
+
                   <div className="mb-3">
                     <label htmlFor="description" className="form-label">Product Description</label>
-                    <textarea className="form-control" id="description"
+                    <textarea
+                      className="form-control"
+                      id="description"
                       name='description'
                       value={description}
                       onChange={inputChange} rows={10}></textarea>
                   </div>
+
                   <div className="mb-3">
-                    <label htmlFor="price" className="form-label">Product Price</label>
-                    <input type="number" step="any" className="form-control" id="price"
-                      placeholder="product price"
+                    <label htmlFor="price" className="form-label">Product price</label>
+                    <input
+                      type="number"
+                      step="any"
+                      className="form-control"
+                      id="price"
+                      placeholder="Product price"
                       name='price'
                       value={price}
                       onChange={inputChange} />
                   </div>
+
                   <div className="mb-3">
-                    <label htmlFor="quantity" className="form-label">Product Quantity</label>
-                    <input type="number" className="form-control" id="quantity"
-                      placeholder="product quantity"
+                    <label htmlFor="quantity" className="form-label">Product quantity</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="quantity"
+                      placeholder="Product quantity"
                       name='quantity'
                       value={quantity}
                       onChange={inputChange} />
                   </div>
+
                   <div className="mb-3">
                     <label htmlFor="category" className="form-label">Product Category</label>
-                    <select id='category'
+                    <select
+                      name="category"
+                      id="category"
                       className='form-control'
-                      name='category'
                       value={category}
                       onChange={inputChange}>
-                      <option value='' hidden>Select Category</option>
+                      <option value="" hidden>Select Category</option>
                       {
                         categories.length > 0 && categories.map((cat, index) => {
-                          if (cat.status === '1') {
-                            return <option>{cat.name}</option>
+                          if(cat.status === "1") {
+                            return <option value={cat.name}>{cat.name}</option>
                           }
                         })
                       }
                     </select>
                   </div>
+
                   <div className="mb-3">
                     <label htmlFor="status" className="form-label">Product Status</label>
-                    <select id='status'
+                    <select
+                      name="status"
+                      id="status"
                       className='form-control'
-                      name='status'
                       value={status}
                       onChange={inputChange}>
-                      <option value='' hidden>Select Status</option>
-                      <option value='0'>Inactive</option>
-                      <option value='1'>Active</option>
+                      <option value="" hidden>Select Status</option>
+                      <option value="1">Active</option>
+                      <option value="0">Inactive</option>
                     </select>
                   </div>
+
                   <div className="row">
                     <div className="col-sm-6 d-grid">
                       <button type='submit' className='btn btn-primary text-white' disabled={imageLoading}>Submit</button>
